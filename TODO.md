@@ -21,10 +21,12 @@
 - [x] Tambah JSON-LD `WebSite` dan `BreadcrumbList`.
 - [ ] Tambah JSON-LD `CreativeWork` lebih lengkap.
 - [x] Tambah Open Graph image final, web manifest, dan favicon modern.
-- [ ] Tambah validasi SEO, accessibility, broken links, dan Lighthouse CI.
+- [x] Tambah validasi otomatis SEO dasar, route, aset, dan broken internal references.
+- [ ] Tambah Lighthouse CI dan browser accessibility testing.
 - [ ] Tambah analytics privacy-friendly setelah domain final.
 - [x] Tambah redirect URL portfolio lama ke URL baru.
 - [ ] Ganti homepage lama setelah hasil build dan preview disetujui.
+
 
 
 
