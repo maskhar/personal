@@ -8,6 +8,13 @@ test('homepage exposes core SEO and navigation', async ({ page }) => {
   await expect(page.locator('a[href="/work/marshal/"]')).toBeVisible();
 });
 
+test('project filter updates visible cards', async ({ page }) => {
+  await page.goto('/');
+  await page.getByRole('button', { name: 'Design' }).click();
+  await expect(page.locator('.project-card:visible')).toHaveCount(1);
+  await expect(page.locator('.project-card:visible')).toContainText('Brand & Visual Collection');
+});
+
 test('project detail renders content and structured data', async ({ page }) => {
   await page.goto('/work/marshal/');
   await expect(page.locator('h1')).toHaveText('Marshal');
@@ -24,10 +31,19 @@ test('contact form exposes labelled required fields', async ({ page }) => {
   }
 });
 
-test('mobile layout stays within viewport', async ({ page }) => {
+test('resume route is printable and complete', async ({ page }) => {
+  await page.goto('/resume/');
+  await expect(page.locator('h1')).toHaveText('Bimo Kharismantoro');
+  await expect(page.getByText('Web Development')).toBeVisible();
+  await expect(page.getByRole('link', { name: /Simpan PDF/ })).toBeVisible();
+});
+
+test('mobile menu opens without horizontal overflow', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'mobile', 'Mobile-only behavior');
   await page.goto('/');
+  await page.getByRole('button', { name: 'Menu' }).click();
+  await expect(page.locator('#site-nav')).toHaveClass(/is-open/);
   const bodyWidth = await page.locator('body').evaluate((element) => element.scrollWidth);
   const viewportWidth = page.viewportSize()?.width ?? 0;
   expect(bodyWidth).toBeLessThanOrEqual(viewportWidth);
 });
-

@@ -7,7 +7,8 @@ const projects = (await getCollection('projects')).sort((a, b) => Number(b.data.
 <BaseLayout>
   <header class="site-header">
     <a class="brand" href="/" aria-label="BK.">BK<span>.</span></a>
-    <nav aria-label="Navigasi utama">
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+    <nav id="site-nav" aria-label="Navigasi utama">
       <a href="#work">Karya</a>
       <a href="#services">Layanan</a>
       <a href="#about">Tentang</a>
@@ -27,9 +28,10 @@ const projects = (await getCollection('projects')).sort((a, b) => Number(b.data.
 
     <section id="work" class="section container">
       <div class="section-heading"><p class="eyebrow">Selected work</p><h2>Beberapa hal yang pernah dibuat.</h2></div>
+      <div class="filter-list" role="group" aria-label="Filter karya"><button class="filter-button is-active" type="button" data-filter="all">Semua</button><button class="filter-button" type="button" data-filter="Web Development">Web</button><button class="filter-button" type="button" data-filter="Graphic Design">Design</button></div>
       <div class="project-grid">
         {projects.map((project, index) => (
-          <a class:list={['project-card', index === 0 && 'project-featured']} href={'/work/' + project.slug + '/'}>
+          <a class:list={['project-card', index === 0 && 'project-featured']} data-category={project.category} href={'/work/' + project.slug + '/'}>
             <div class="project-image"><img src={project.image} alt={`Preview project ${project.title}`} width={project.width} height={project.height} loading={index === 0 ? 'eager' : 'lazy'} /></div>
             <div class="project-meta"><div><p class="project-category">{project.category} · {project.year}</p><h3>{project.title}</h3></div><span aria-hidden="true">↗</span></div>
             <p class="project-description">{project.description}</p>
@@ -49,10 +51,17 @@ const projects = (await getCollection('projects')).sort((a, b) => Number(b.data.
       <div class="about-copy"><p>Saya menggabungkan development, desain, dan rasa ingin tahu untuk membuat solusi digital yang bukan hanya terlihat baik, tetapi juga bekerja dengan baik.</p><p>Berbasis di Tulungagung, saya terbuka untuk project freelance, kolaborasi, dan kesempatan membangun sesuatu yang berdampak.</p></div>
     </section>
 
-    <section id="contact" class="contact container"><p class="eyebrow">Have a project in mind?</p><h2>Mari buat sesuatu<br /><em>yang berarti.</em></h2><a class="button button-primary" href={`mailto:${site.email}`}>Hubungi saya ↗</a><div class="contact-links"><a href={site.github} target="_blank" rel="noopener noreferrer">GitHub</a><a href={site.instagram} target="_blank" rel="noopener noreferrer">Instagram</a><a href={site.whatsapp} target="_blank" rel="noopener noreferrer">WhatsApp</a></div></section>
+    <section id="contact" class="contact container"><p class="eyebrow">Have a project in mind?</p><h2>Mari buat sesuatu<br /><em>yang berarti.</em></h2><div class="contact-actions"><a class="button button-primary" href={`mailto:${site.email}`}>Hubungi saya ↗</a><a class="button button-secondary" href="/resume/">Lihat resume ↗</a></div><div class="contact-links"><a href={site.github} target="_blank" rel="noopener noreferrer">GitHub</a><a href={site.instagram} target="_blank" rel="noopener noreferrer">Instagram</a><a href={site.whatsapp} target="_blank" rel="noopener noreferrer">WhatsApp</a></div></section>
   </main>
 
   <footer class="site-footer container"><span>© {new Date().getFullYear()} {site.name}</span><span>Dibuat dengan niat baik.</span></footer>
+<script>
+  const toggle = document.querySelector('.menu-toggle');
+  const nav = document.querySelector('#site-nav');
+  toggle?.addEventListener('click', () => { const open = toggle.getAttribute('aria-expanded') === 'true'; toggle.setAttribute('aria-expanded', String(!open)); nav?.classList.toggle('is-open', !open); });
+  document.querySelectorAll('.filter-button').forEach((button) => button.addEventListener('click', () => { document.querySelectorAll('.filter-button').forEach((item) => item.classList.remove('is-active')); button.classList.add('is-active'); const filter = button.getAttribute('data-filter'); document.querySelectorAll('.project-card').forEach((card) => { card.toggleAttribute('hidden', filter !== 'all' && card.getAttribute('data-category') !== filter); }); }));
+</script>
 </BaseLayout>
+
 
 

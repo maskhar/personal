@@ -1,0 +1,8 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { site, services } from '../../data/site';
+---
+<BaseLayout title={'Resume — ' + site.name} description={'Resume ' + site.name + ', web developer dan digital creative dari Tulungagung.'}>
+  <header class="site-header print-hidden"><a class="brand" href="/">BK<span>.</span></a><nav><a href="/">Beranda</a><a class="nav-cta" href="javascript:window.print()">Print / PDF</a></nav></header>
+  <main id="main" class="resume-page container"><div class="resume-heading"><div><p class="eyebrow">Resume · 2026</p><h1 class="page-title">{site.name}</h1><p class="project-intro">{site.role} · {site.location}</p></div><a class="button button-primary print-hidden" href="javascript:window.print()">Simpan PDF ↗</a></div><section class="resume-section"><p class="eyebrow">Profile</p><p>Saya membangun website, interface, dan solusi digital dengan perhatian pada struktur, visual, dan pengalaman pengguna.</p></section><section class="resume-section"><p class="eyebrow">Capabilities</p><div class="resume-grid">{services.map((service) => <article><h2>{service.title}</h2><p>{service.text}</p></article>)}</div></section><section class="resume-section"><p class="eyebrow">Contact</p><p><a href={'mailto:' + site.email}>{site.email}</a><br />{site.phone}<br />{site.location}</p></section></main>
+</BaseLayout>
