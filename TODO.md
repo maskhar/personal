@@ -20,11 +20,12 @@
 - [x] Tambah JSON-LD `Person`.
 - [x] Tambah JSON-LD `WebSite` dan `BreadcrumbList`.
 - [ ] Tambah JSON-LD `CreativeWork` lebih lengkap.
-- [ ] Tambah Open Graph image final dan favicon modern.
+- [x] Tambah Open Graph image final, web manifest, dan favicon modern.
 - [ ] Tambah validasi SEO, accessibility, broken links, dan Lighthouse CI.
 - [ ] Tambah analytics privacy-friendly setelah domain final.
-- [ ] Uji redirect URL portfolio lama ke URL baru.
+- [x] Tambah redirect URL portfolio lama ke URL baru.
 - [ ] Ganti homepage lama setelah hasil build dan preview disetujui.
+
 
 
 

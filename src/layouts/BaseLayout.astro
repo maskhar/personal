@@ -2,7 +2,7 @@
 import { site } from '../data/site';
 import '../styles/global.css';
 interface Props { title?: string; description?: string; image?: string; type?: 'website' | 'article'; }
-const { title = site.name + ' — ' + site.role, description = site.description, image = '/assets/img/bio/petikdua-2.webp', type = 'website' } = Astro.props;
+const { title = site.name + ' — ' + site.role, description = site.description, image = '/og-image.png', type = 'website' } = Astro.props;
 const canonical = new URL(Astro.url.pathname, site.canonical).toString();
 const personSchema = { '@context': 'https://schema.org', '@type': 'Person', name: site.name, url: site.canonical, jobTitle: site.role, email: 'mailto:' + site.email, sameAs: [site.github, site.instagram] };
 const websiteSchema = { '@context': 'https://schema.org', '@type': 'WebSite', name: site.name, url: site.canonical, description: site.description, inLanguage: 'id-ID' };
@@ -22,6 +22,7 @@ const websiteSchema = { '@context': 'https://schema.org', '@type': 'WebSite', na
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="theme-color" content="#0b0d0f" />
     <link rel="icon" href="/assets/img/bio/petikdua-2.webp" />
+    <link rel="manifest" href="/site.webmanifest" />
     <title>{title}</title>
     <script is:inline type="application/ld+json" set:html={JSON.stringify(personSchema)} />
     <script is:inline type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
@@ -31,6 +32,7 @@ const websiteSchema = { '@context': 'https://schema.org', '@type': 'WebSite', na
     <slot />
   </body>
 </html>
+
 
 
 
