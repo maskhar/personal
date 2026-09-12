@@ -6,6 +6,8 @@ const { title = site.name + ' — ' + site.role, description = site.description,
 const canonical = new URL(Astro.url.pathname, site.canonical).toString();
 const personSchema = { '@context': 'https://schema.org', '@type': 'Person', name: site.name, url: site.canonical, jobTitle: site.role, email: 'mailto:' + site.email, sameAs: [site.github, site.instagram] };
 const websiteSchema = { '@context': 'https://schema.org', '@type': 'WebSite', name: site.name, url: site.canonical, description: site.description, inLanguage: 'id-ID' };
+const analyticsScript = import.meta.env.PUBLIC_UMAMI_SCRIPT_URL;
+const analyticsWebsiteId = import.meta.env.PUBLIC_UMAMI_WEBSITE_ID;
 ---
 <!doctype html>
 <html lang="id">
@@ -28,12 +30,15 @@ const websiteSchema = { '@context': 'https://schema.org', '@type': 'WebSite', na
     <title>{title}</title>
     <script is:inline type="application/ld+json" set:html={JSON.stringify(personSchema)} />
     <script is:inline type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
+    {analyticsScript && analyticsWebsiteId && <script is:inline async src={analyticsScript} data-website-id={analyticsWebsiteId}></script>}
   </head>
   <body>
     <a class="skip-link" href="#main">Lewati ke konten utama</a>
     <slot />
   </body>
 </html>
+
+
 
 
 

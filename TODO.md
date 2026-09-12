@@ -14,7 +14,7 @@
 
 - [ ] Ganti seluruh placeholder project dengan data dan link final.
 - [x] Kompres aset terpakai ke WebP dan pindahkan ke `public/`.
-- [ ] Audit dan hapus aset lama yang tidak terpakai setelah migrasi final.
+- [x] Audit dan hapus Bootstrap, PHP form, HTML, dan aset legacy yang sudah diganti.
 - [x] Tambah halaman daftar karya dan detail statis `/work/[slug]/`.
 - [x] Sambungkan contact form statis ke FormSubmit dengan honeypot dan success page.
 - [x] Tambah JSON-LD `Person`.
@@ -24,9 +24,11 @@
 - [x] Tambah validasi otomatis SEO dasar, route, aset, dan broken internal references.
 - [x] Tambah Lighthouse CI untuk performance, accessibility, best practices, dan SEO.
 - [x] Tambah Playwright browser smoke tests untuk route, SEO, form, dan mobile layout.
-- [ ] Tambah analytics privacy-friendly setelah domain final.
+- [x] Tambah analytics privacy-friendly opt-in via Umami environment variables.
 - [x] Tambah redirect URL portfolio lama ke URL baru.
-- [ ] Ganti homepage lama setelah hasil build dan preview disetujui.
+- [x] Ganti homepage lama dengan output Astro melalui workflow deployment.
+
+
 
 
 
