@@ -8,12 +8,16 @@
     "build": "astro check && astro build && npm run validate",
     "preview": "astro preview",
     "check": "astro check",
-    "validate": "node scripts/validate-build.mjs"
+    "validate": "node scripts/validate-build.mjs",
+    "lighthouse": "lhci autorun"
   },
   "dependencies": {
     "@astrojs/check": "latest",
     "@astrojs/sitemap": "latest",
     "astro": "latest",
     "typescript": "latest"
+  },
+  "devDependencies": {
+    "@lhci/cli": "^0.15.1"
   }
 }

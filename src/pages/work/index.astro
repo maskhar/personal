@@ -7,6 +7,7 @@ const projects = (await getCollection('projects')).sort((a, b) => Number(b.data.
   <header class="site-header"><a class="brand" href="/">BK<span>.</span></a><nav><a href="/">Beranda</a><a class="nav-cta" href="/contact/">Kontak ↗</a></nav></header>
   <main id="main" class="container page-main">
     <p class="eyebrow">Project archive</p><h1 class="page-title">Karya pilihan.</h1>
-    <div class="project-grid">{projects.map((project) => <a class="project-card" href={'/work/' + project.slug + '/'}><div class="project-image"><img src={project.image} alt={'Preview project ' + project.title} loading="lazy" /></div><div class="project-meta"><div><p class="project-category">{project.category} · {project.year}</p><h2>{project.title}</h2></div><span>↗</span></div><p class="project-description">{project.description}</p></a>)}</div>
+    <div class="project-grid">{projects.map((project, index) => <a class="project-card" href={'/work/' + project.slug + '/'}><div class="project-image"><img src={project.image} alt={'Preview project ' + project.title} width={project.width} height={project.height} loading={index === 0 ? 'eager' : 'lazy'} /></div><div class="project-meta"><div><p class="project-category">{project.category} · {project.year}</p><h2>{project.title}</h2></div><span>↗</span></div><p class="project-description">{project.description}</p></a>)}</div>
   </main>
 </BaseLayout>
+

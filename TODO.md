@@ -19,13 +19,15 @@
 - [x] Sambungkan contact form statis ke FormSubmit dengan honeypot dan success page.
 - [x] Tambah JSON-LD `Person`.
 - [x] Tambah JSON-LD `WebSite` dan `BreadcrumbList`.
-- [ ] Tambah JSON-LD `CreativeWork` lebih lengkap.
+- [x] Tambah JSON-LD `CreativeWork` lengkap per project.
 - [x] Tambah Open Graph image final, web manifest, dan favicon modern.
 - [x] Tambah validasi otomatis SEO dasar, route, aset, dan broken internal references.
-- [ ] Tambah Lighthouse CI dan browser accessibility testing.
+- [x] Tambah Lighthouse CI untuk performance, accessibility, best practices, dan SEO.
+- [ ] Tambah browser interaction dan accessibility testing.
 - [ ] Tambah analytics privacy-friendly setelah domain final.
 - [x] Tambah redirect URL portfolio lama ke URL baru.
 - [ ] Ganti homepage lama setelah hasil build dan preview disetujui.
+
 
 
 

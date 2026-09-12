@@ -6,7 +6,7 @@ const projects = (await getCollection('projects')).sort((a, b) => Number(b.data.
 ---
 <BaseLayout>
   <header class="site-header">
-    <a class="brand" href="/" aria-label="Bimo Kharismantoro, beranda">BK<span>.</span></a>
+    <a class="brand" href="/" aria-label="BK.">BK<span>.</span></a>
     <nav aria-label="Navigasi utama">
       <a href="#work">Karya</a>
       <a href="#services">Layanan</a>
@@ -30,7 +30,7 @@ const projects = (await getCollection('projects')).sort((a, b) => Number(b.data.
       <div class="project-grid">
         {projects.map((project, index) => (
           <a class:list={['project-card', index === 0 && 'project-featured']} href={'/work/' + project.slug + '/'}>
-            <div class="project-image"><img src={project.image} alt={`Preview project ${project.title}`} loading={index === 0 ? 'eager' : 'lazy'} /></div>
+            <div class="project-image"><img src={project.image} alt={`Preview project ${project.title}`} width={project.width} height={project.height} loading={index === 0 ? 'eager' : 'lazy'} /></div>
             <div class="project-meta"><div><p class="project-category">{project.category} · {project.year}</p><h3>{project.title}</h3></div><span aria-hidden="true">↗</span></div>
             <p class="project-description">{project.description}</p>
           </a>
@@ -54,4 +54,5 @@ const projects = (await getCollection('projects')).sort((a, b) => Number(b.data.
 
   <footer class="site-footer container"><span>© {new Date().getFullYear()} {site.name}</span><span>Dibuat dengan niat baik.</span></footer>
 </BaseLayout>
+
 

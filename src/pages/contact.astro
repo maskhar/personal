@@ -10,7 +10,7 @@ import { site } from '../data/site';
       <form class="contact-form" action={'https://formsubmit.co/' + site.email} method="POST">
         <input type="hidden" name="_subject" value="Inquiry baru dari maskhar.com" />
         <input type="hidden" name="_next" value={site.canonical + '/thanks/'} />
-        <input type="text" name="_honey" class="honeypot" tabindex="-1" autocomplete="off" />
+        <input type="text" name="_honey" class="honeypot" tabindex="-1" autocomplete="off" aria-hidden="true" />
         <label for="name">Nama</label><input id="name" name="name" type="text" autocomplete="name" required />
         <label for="email">Email</label><input id="email" name="email" type="email" autocomplete="email" required />
         <label for="service">Kebutuhan</label><select id="service" name="service" required><option value="">Pilih layanan</option><option>Web Development</option><option>UI/UX Design</option><option>Graphic Design</option><option>Digital Solution</option></select>
@@ -21,3 +21,4 @@ import { site } from '../data/site';
     </div>
   </main>
 </BaseLayout>
+

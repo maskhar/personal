@@ -3,6 +3,8 @@ title: Marshal
 slug: marshal
 category: Web Development
 year: '2025'
+width: 192
+height: 192
 image: /assets/img/portfolio/web/marshal.webp
 description: Eksplorasi interface dan implementasi website modern.
 challenge: Menyusun pengalaman digital yang mudah dipahami, konsisten, dan memiliki karakter visual kuat.
@@ -13,3 +15,4 @@ services:
   - Responsive Design
 ---
 Marshal menjadi eksplorasi untuk membangun pengalaman web yang ringkas, jelas, dan siap digunakan di berbagai ukuran layar.
+
