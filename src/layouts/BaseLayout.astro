@@ -1,0 +1,36 @@
+---
+import { site } from '../data/site';
+import '../styles/global.css';
+interface Props { title?: string; description?: string; image?: string; type?: 'website' | 'article'; }
+const { title = site.name + ' — ' + site.role, description = site.description, image = '/assets/img/bio/petikdua-2.webp', type = 'website' } = Astro.props;
+const canonical = new URL(Astro.url.pathname, site.canonical).toString();
+const personSchema = { '@context': 'https://schema.org', '@type': 'Person', name: site.name, url: site.canonical, jobTitle: site.role, email: 'mailto:' + site.email, sameAs: [site.github, site.instagram] };
+const websiteSchema = { '@context': 'https://schema.org', '@type': 'WebSite', name: site.name, url: site.canonical, description: site.description, inLanguage: 'id-ID' };
+---
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:type" content={type} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={new URL(image, site.canonical)} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="theme-color" content="#0b0d0f" />
+    <link rel="icon" href="/assets/img/bio/petikdua-2.webp" />
+    <title>{title}</title>
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(personSchema)} />
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Lewati ke konten utama</a>
+    <slot />
+  </body>
+</html>
+
+
+

@@ -1,0 +1,54 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { projects, services, site } from '../data/site';
+---
+<BaseLayout>
+  <header class="site-header">
+    <a class="brand" href="/" aria-label="Bimo Kharismantoro, beranda">BK<span>.</span></a>
+    <nav aria-label="Navigasi utama">
+      <a href="#work">Karya</a>
+      <a href="#services">Layanan</a>
+      <a href="#about">Tentang</a>
+      <a class="nav-cta" href="#contact">Mulai ngobrol ↗</a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="hero container">
+      <p class="eyebrow">Portfolio pribadi · {site.location}</p>
+      <h1>Membangun <em>digital experience</em> yang terasa manusiawi.</h1>
+      <div class="hero-bottom">
+        <p class="lede">Saya Bimo, web developer dan digital creative yang membantu ide berubah menjadi website, brand, dan pengalaman digital yang siap digunakan.</p>
+        <a class="button button-primary" href="#work">Lihat karya <span>↓</span></a>
+      </div>
+    </section>
+
+    <section id="work" class="section container">
+      <div class="section-heading"><p class="eyebrow">Selected work</p><h2>Beberapa hal yang pernah dibuat.</h2></div>
+      <div class="project-grid">
+        {projects.map((project, index) => (
+          <a class:list={['project-card', index === 0 && 'project-featured']} href={'/work/' + project.slug + '/'}>
+            <div class="project-image"><img src={project.image} alt={`Preview project ${project.title}`} loading={index === 0 ? 'eager' : 'lazy'} /></div>
+            <div class="project-meta"><div><p class="project-category">{project.category} · {project.year}</p><h3>{project.title}</h3></div><span aria-hidden="true">↗</span></div>
+            <p class="project-description">{project.description}</p>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section id="services" class="section section-muted">
+      <div class="container"><div class="section-heading"><p class="eyebrow">What I do</p><h2>Keahlian untuk membuat ide bergerak.</h2></div>
+        <div class="service-grid">{services.map((service) => <article class="service-card"><span>{service.number}</span><h3>{service.title}</h3><p>{service.text}</p></article>)}</div>
+      </div>
+    </section>
+
+    <section id="about" class="section container about-grid">
+      <div><p class="eyebrow">About me</p><h2>Teknologi kuat. Komunikasi jelas.</h2></div>
+      <div class="about-copy"><p>Saya menggabungkan development, desain, dan rasa ingin tahu untuk membuat solusi digital yang bukan hanya terlihat baik, tetapi juga bekerja dengan baik.</p><p>Berbasis di Tulungagung, saya terbuka untuk project freelance, kolaborasi, dan kesempatan membangun sesuatu yang berdampak.</p></div>
+    </section>
+
+    <section id="contact" class="contact container"><p class="eyebrow">Have a project in mind?</p><h2>Mari buat sesuatu<br /><em>yang berarti.</em></h2><a class="button button-primary" href={`mailto:${site.email}`}>Hubungi saya ↗</a><div class="contact-links"><a href={site.github} target="_blank" rel="noopener noreferrer">GitHub</a><a href={site.instagram} target="_blank" rel="noopener noreferrer">Instagram</a><a href={site.whatsapp} target="_blank" rel="noopener noreferrer">WhatsApp</a></div></section>
+  </main>
+
+  <footer class="site-footer container"><span>© {new Date().getFullYear()} {site.name}</span><span>Dibuat dengan niat baik.</span></footer>
+</BaseLayout>

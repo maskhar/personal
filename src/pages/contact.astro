@@ -1,0 +1,23 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { site } from '../data/site';
+---
+<BaseLayout title={'Kontak — ' + site.name} description={'Hubungi ' + site.name + ' untuk web development, UI/UX design, dan kebutuhan digital.'}>
+  <header class="site-header"><a class="brand" href="/">BK<span>.</span></a><nav><a href="/work/">Karya</a><a href="/#about">Tentang</a></nav></header>
+  <main id="main" class="container page-main">
+    <p class="eyebrow">Start a conversation</p><h1 class="page-title">Ceritakan ide kamu.</h1><p class="project-intro">Kirim gambaran singkat project, target, dan waktu pengerjaan. Saya akan membalas melalui email.</p>
+    <div class="contact-layout">
+      <form class="contact-form" action={'https://formsubmit.co/' + site.email} method="POST">
+        <input type="hidden" name="_subject" value="Inquiry baru dari maskhar.com" />
+        <input type="hidden" name="_next" value={site.canonical + '/thanks/'} />
+        <input type="text" name="_honey" class="honeypot" tabindex="-1" autocomplete="off" />
+        <label for="name">Nama</label><input id="name" name="name" type="text" autocomplete="name" required />
+        <label for="email">Email</label><input id="email" name="email" type="email" autocomplete="email" required />
+        <label for="service">Kebutuhan</label><select id="service" name="service" required><option value="">Pilih layanan</option><option>Web Development</option><option>UI/UX Design</option><option>Graphic Design</option><option>Digital Solution</option></select>
+        <label for="message">Ceritakan project</label><textarea id="message" name="message" rows="7" required></textarea>
+        <button class="button button-primary" type="submit">Kirim pesan ↗</button>
+      </form>
+      <div class="contact-options"><a href={'mailto:' + site.email}><span>Email</span><strong>{site.email}</strong></a><a href={site.whatsapp} target="_blank" rel="noopener noreferrer"><span>WhatsApp</span><strong>{site.phone}</strong></a></div>
+    </div>
+  </main>
+</BaseLayout>
