@@ -9,7 +9,8 @@
     "preview": "astro preview",
     "check": "astro check",
     "validate": "node scripts/validate-build.mjs",
-    "lighthouse": "lhci autorun"
+    "lighthouse": "lhci autorun",
+    "test": "playwright test"
   },
   "dependencies": {
     "@astrojs/check": "latest",
@@ -18,6 +19,7 @@
     "typescript": "latest"
   },
   "devDependencies": {
-    "@lhci/cli": "^0.15.1"
+    "@lhci/cli": "^0.15.1",
+    "@playwright/test": "^1.63.0"
   }
 }

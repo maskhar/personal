@@ -23,10 +23,11 @@
 - [x] Tambah Open Graph image final, web manifest, dan favicon modern.
 - [x] Tambah validasi otomatis SEO dasar, route, aset, dan broken internal references.
 - [x] Tambah Lighthouse CI untuk performance, accessibility, best practices, dan SEO.
-- [ ] Tambah browser interaction dan accessibility testing.
+- [x] Tambah Playwright browser smoke tests untuk route, SEO, form, dan mobile layout.
 - [ ] Tambah analytics privacy-friendly setelah domain final.
 - [x] Tambah redirect URL portfolio lama ke URL baru.
 - [ ] Ganti homepage lama setelah hasil build dan preview disetujui.
+
 
 
 
