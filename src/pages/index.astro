@@ -1,6 +1,8 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { projects, services, site } from '../data/site';
+import { getCollection } from 'astro:content';
+import { services, site } from '../data/site';
+const projects = (await getCollection('projects')).sort((a, b) => Number(b.data.year) - Number(a.data.year)).map((entry) => entry.data);
 ---
 <BaseLayout>
   <header class="site-header">
@@ -52,3 +54,4 @@ import { projects, services, site } from '../data/site';
 
   <footer class="site-footer container"><span>© {new Date().getFullYear()} {site.name}</span><span>Dibuat dengan niat baik.</span></footer>
 </BaseLayout>
+
