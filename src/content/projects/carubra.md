@@ -9,11 +9,11 @@ image: /assets/img/portfolio/web/carubra.webp
 gallery:
   - src: /assets/img/portfolio/web/carubra.webp
     alt: CARUBRA AI Agent
-  - src: /assets/img/portfolio/web/carubra-tech.png
+  - src: /assets/img/portfolio/web/carubra-tech.webp
     alt: Infografik teknologi CARUBRA AI Agent
-  - src: /assets/img/portfolio/web/carubra-possibilities.png
+  - src: /assets/img/portfolio/web/carubra-possibilities.webp
     alt: Ragam penggunaan CARUBRA AI Agent
-  - src: /assets/img/portfolio/web/carubra-landing.png
+  - src: /assets/img/portfolio/web/carubra-landing.webp
     alt: Landing page platform CARUBRA
 link: https://carubra.com
 description: Project mandiri yang berkembang menjadi solusi AI Agent via WhatsApp untuk kebutuhan bisnis dan klien.
@@ -30,6 +30,8 @@ CARUBRA adalah project yang saya kerjakan secara mandiri selama lima bulan dan m
 
 Seiring proses pengembangan, CARUBRA bergerak dari project mandiri menuju produk yang disiapkan untuk kebutuhan klien dan penggunaan bisnis. Fokusnya bukan hanya membuat teknologi AI bekerja, tetapi juga menerjemahkan manfaatnya menjadi pengalaman yang mudah dipahami oleh calon pengguna.
 
+![Halaman utama CARUBRA dengan ilustrasi percakapan WhatsApp](/assets/img/portfolio/web/carubra-site.webp)
+
 ## Peran dan Tanggung Jawab
 
 Saya mengerjakan project ini sendiri. Pengembangan berlangsung selama lima bulan dan berlanjut seiring arah project bergeser dari kebutuhan personal menuju kebutuhan klien dan bisnis.
@@ -38,13 +40,13 @@ Saya mengerjakan project ini sendiri. Pengembangan berlangsung selama lima bulan
 
 CARUBRA berawal sebagai project mandiri, kemudian berkembang menuju kebutuhan klien dan bisnis. Perubahan arah ini menjadi bagian penting dari perjalanan project: hasil pengembangan tidak lagi hanya ditujukan untuk eksplorasi personal.
 
-![CARUBRA AI Agent Technology](/assets/img/portfolio/web/carubra-tech.png)
+![CARUBRA AI Agent Technology](/assets/img/portfolio/web/carubra-tech.webp)
 
 ## One Technology, Many Possibilities
 
 CARUBRA membangun AI Agent untuk bisnis, organisasi, dan profesional — disesuaikan dengan kebutuhan Anda.
 
-![Many Possibilities](/assets/img/portfolio/web/carubra-possibilities.png)
+![Many Possibilities](/assets/img/portfolio/web/carubra-possibilities.webp)
 
 **Untuk Siapa CARUBRA?**
 
@@ -63,7 +65,7 @@ CARUBRA membangun AI Agent untuk bisnis, organisasi, dan profesional — disesua
 - **Custom Integration**: Terintegrasi dengan sistem internal, API, CRM, dan database
 - **Workflow Automation**: Otomatisasi proses bisnis dan tugas
 
-![CARUBRA Platform](/assets/img/portfolio/web/carubra-landing.png)
+![CARUBRA Platform](/assets/img/portfolio/web/carubra-landing.webp)
 
 ## Tech Stack
 
