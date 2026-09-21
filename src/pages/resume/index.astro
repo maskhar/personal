@@ -1,8 +1,149 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { site, services } from '../../data/site';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { site } from '../../data/site';
+
+const skills = [
+  { label: 'Adobe Illustrator', value: 93 },
+  { label: 'Adobe Photoshop', value: 90 },
+  { label: 'Fotografi', value: 86 },
+  { label: 'JavaScript', value: 80 },
+  { label: 'Pemrograman Jaringan', value: 80 },
+  { label: 'Mikrotik', value: 80 },
+  { label: 'Linux Server', value: 80 },
+  { label: 'HTML & CSS', value: 76 },
+  { label: 'UI/UX Design', value: 66 },
+  { label: 'PHP & MySQL', value: 50 }
+];
+
+const experience = [
+  {
+    period: 'Okt 2022 — Sekarang',
+    title: 'Web Developer & IT Development',
+    org: 'UTERO Creative Indonesia · Malang',
+    points: [
+      'Mengelola optimasi marketplace dan website perusahaan',
+      'Membangun dan mengembangkan website perusahaan',
+      'Menangani infrastruktur IT: jaringan dan data center kantor'
+    ]
+  },
+  {
+    period: 'Des 2021 — Sekarang',
+    title: 'Freelance — Web, Hosting & Discord Bot Development',
+    org: 'Mandiri',
+    points: [
+      'Jasa pembuatan website dan hosting untuk klien personal maupun bisnis',
+      'Pengembangan bot Discord untuk komunitas server, termasuk hosting dan keamanan'
+    ]
+  },
+  {
+    period: '2019 — 2022',
+    title: 'Desain Grafis & Operator Mesin Cetak',
+    org: 'Sinar Terang 2, CV. Wahana Karya Jaya, CV. Kaja Production, MAGENTA Studio Reklame, Wijaya Fotocopy & Digital Printing',
+    points: [
+      'Mengolah desain pelanggan menjadi output cetak: banner, stiker, art paper, bordir logo',
+      'Mengonfirmasi pesanan dan detail produksi langsung dengan klien'
+    ]
+  },
+  {
+    period: 'Des 2020 — Nov 2021',
+    title: 'Administrasi & COVID-19 Task Force Volunteer',
+    org: 'Klinik Cahaya Medika Kita · Depok',
+    points: [
+      'Pembukuan dasar dan pengelolaan dokumen klinik',
+      'Pendataan dan pengambilan sampel SWAB pasien'
+    ]
+  }
+];
+
+const education = [
+  { period: '2018 — 2019', title: 'Teknik Informatika', org: 'Universitas Muhammadiyah Malang · 4 semester' },
+  { period: '2015 — 2018', title: 'SMA · Jurusan IPA', org: 'SMA Jawaahirul Hikmah 3 · Tulungagung' }
+];
+
+const resumeSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfilePage',
+  name: 'Resume — ' + site.name,
+  url: site.canonical + '/resume/',
+  inLanguage: 'id-ID',
+  isPartOf: { '@id': site.canonical + '/#website' },
+  mainEntity: { '@id': site.canonical + '/#person' }
+};
 ---
-<BaseLayout title={'Resume — ' + site.name} description={'Resume ' + site.name + ', web developer dan digital creative dari Tulungagung.'}>
-  <header class="site-header print-hidden"><a class="brand" href="/">BK<span>.</span></a><nav><a href="/">Beranda</a><a class="nav-cta" href="javascript:window.print()">Print / PDF</a></nav></header>
-  <main id="main" class="resume-page container"><div class="resume-heading"><div><p class="eyebrow">Resume · 2026</p><h1 class="page-title">{site.name}</h1><p class="project-intro">{site.role} · {site.location}</p></div><a class="button button-primary print-hidden" href="javascript:window.print()">Simpan PDF ↗</a></div><section class="resume-section"><p class="eyebrow">Profile</p><p>Saya membangun website, interface, dan solusi digital dengan perhatian pada struktur, visual, dan pengalaman pengguna.</p></section><section class="resume-section"><p class="eyebrow">Capabilities</p><div class="resume-grid">{services.map((service) => <article><h2>{service.title}</h2><p>{service.text}</p></article>)}</div></section><section class="resume-section"><p class="eyebrow">Contact</p><p><a href={'mailto:' + site.email}>{site.email}</a><br />{site.phone}<br />{site.location}</p></section></main>
+<BaseLayout
+  title={'Resume — ' + site.name}
+  description={'Resume ' + site.name + ': ' + site.yearsExperience + '+ tahun pengalaman web development, UI/UX design, dan IT di Tulungagung.'}
+  statusRight="resume.pdf · ready"
+>
+  <Header />
+  <main id="main" class="resume-page container">
+    <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/">~</a><span class="sep">/</span><span aria-current="page">resume</span></nav>
+    <div class="resume-heading">
+      <div>
+        <p class="eyebrow">Resume · 2026</p>
+        <h1 class="page-title">{site.name}</h1>
+        <p class="project-intro">{site.role} · {site.location}</p>
+      </div>
+      <button class="button button-primary print-hidden" type="button" data-print>Simpan PDF ↗</button>
+    </div>
+
+    <section class="resume-section" data-reveal>
+      <p class="eyebrow">Profile</p>
+      <p>Desainer grafis dan web developer dengan pengalaman lebih dari {site.yearsExperience} tahun merancang dan mengembangkan produk digital yang berpusat pada pengguna — dari identitas visual, antarmuka, hingga website yang siap pakai. Berbasis di Tulungagung, saat ini aktif sebagai Web Developer & IT Development di {site.worksFor} sekaligus menerima project freelance.</p>
+    </section>
+
+    <section class="resume-section" data-reveal>
+      <p class="eyebrow">Experience</p>
+      <div class="timeline">
+        {experience.map((item) => (
+          <article class="timeline-item">
+            <p class="timeline-period">{item.period}</p>
+            <div>
+              <h2>{item.title}</h2>
+              <p class="timeline-org">{item.org}</p>
+              <ul>{item.points.map((point) => <li>{point}</li>)}</ul>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="resume-section" data-reveal>
+      <p class="eyebrow">Education</p>
+      <div class="timeline">
+        {education.map((item) => (
+          <article class="timeline-item">
+            <p class="timeline-period">{item.period}</p>
+            <div><h2>{item.title}</h2><p class="timeline-org">{item.org}</p></div>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="resume-section" data-reveal>
+      <p class="eyebrow">Skills</p>
+      <div class="skills-meter-list">
+        {skills.map((skill) => (
+          <div class="skill-meter">
+            <div class="skill-meter-label"><span>{skill.label}</span><strong>{skill.value}%</strong></div>
+            <div class="skill-meter-track" role="progressbar" aria-label={skill.label} aria-valuenow={skill.value} aria-valuemin="0" aria-valuemax="100">
+              <div class="skill-meter-fill" style={`width:${skill.value}%`}></div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section class="resume-section" data-reveal>
+      <p class="eyebrow">Contact</p>
+      <p><a href={'mailto:' + site.email}>{site.email}</a><br />{site.phone}<br />{site.location}</p>
+    </section>
+  </main>
+  <Footer />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(resumeSchema)} />
 </BaseLayout>
+<script>
+  document.querySelectorAll<HTMLButtonElement>('[data-print]').forEach((button) => button.addEventListener('click', () => window.print()));
+</script>

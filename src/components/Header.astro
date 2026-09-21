@@ -1,0 +1,53 @@
+---
+interface NavLink { label: string; href: string; cta?: boolean }
+interface Props { links?: NavLink[] }
+const defaultLinks: NavLink[] = [
+  { label: 'Beranda', href: '/' },
+  { label: 'Karya', href: '/work/' },
+  { label: 'Resume', href: '/resume/' },
+  { label: 'Kontak', href: '/contact/', cta: true }
+];
+const { links = defaultLinks } = Astro.props;
+const path = Astro.url.pathname;
+function isCurrent(href: string) {
+  if (href.startsWith('#')) return false;
+  return href === '/' ? path === '/' : path.startsWith(href);
+}
+---
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="/" aria-label="Beranda Bimo Kharismantoro">
+      <span class="brand-sigil">~/</span>bimo<span class="brand-accent">.k</span><span class="brand-caret">▌</span>
+    </a>
+    <button class="cmdk-trigger" type="button" data-cmdk-open aria-label="Buka pencarian cepat (Ctrl K)">
+      <span aria-hidden="true">/</span> cari <kbd>Ctrl K</kbd>
+    </button>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+    <nav id="site-nav" class="tabs" aria-label="Navigasi utama">
+      {links.map((link) => (
+        <a
+          class:list={[link.cta ? 'nav-cta' : 'tab']}
+          data-ext={link.cta ? undefined : ''}
+          href={link.href}
+          aria-current={isCurrent(link.href) ? 'page' : undefined}
+        >
+          {link.label}
+        </a>
+      ))}
+    </nav>
+  </div>
+</header>
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>('.menu-toggle');
+  const nav = document.querySelector<HTMLElement>('#site-nav');
+  toggle?.addEventListener('click', () => {
+    const open = toggle.getAttribute('aria-expanded') === 'true';
+    toggle.setAttribute('aria-expanded', String(!open));
+    nav?.classList.toggle('is-open', !open);
+  });
+  nav?.addEventListener('click', (event) => {
+    if (!(event.target instanceof HTMLAnchorElement)) return;
+    toggle?.setAttribute('aria-expanded', 'false');
+    nav.classList.remove('is-open');
+  });
+</script>

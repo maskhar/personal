@@ -1,7 +1,22 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
 ---
-<BaseLayout title="Halaman tidak ditemukan — Bimo Kharismantoro" description="Halaman yang kamu cari tidak ditemukan.">
-  <main id="main" class="status-page container"><p class="eyebrow">404 · Not found</p><h1>Halaman tidak ditemukan.</h1><p>URL mungkin sudah berubah atau halaman belum tersedia.</p><a class="button button-primary" href="/">Kembali ke beranda</a></main>
+<BaseLayout title="Halaman tidak ditemukan — Bimo Kharismantoro" description="Halaman yang kamu cari tidak ditemukan." noindex statusRight="404 · error">
+  <Header />
+  <main id="main" class="status-page container">
+    <div class="win status-win">
+      <div class="win-bar"><span class="dots"><i></i><i></i><i></i></span><span class="win-title">bash</span></div>
+      <div class="win-body">
+        <p class="status-out"><span class="prompt">$</span> curl {Astro.url.pathname}</p>
+        <p class="status-out"><span class="err">bash: 404:</span> route not found<span class="caret"></span></p>
+      </div>
+    </div>
+    <p class="eyebrow">404 · Not found</p>
+    <h1>Halaman tidak ditemukan.</h1>
+    <p>URL mungkin sudah berubah atau halaman belum tersedia.</p>
+    <div class="contact-actions"><a class="button button-primary" href="/">Kembali ke beranda</a><a class="button button-secondary" href="/work/">Lihat karya</a></div>
+  </main>
+  <Footer />
 </BaseLayout>
-

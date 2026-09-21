@@ -3,13 +3,22 @@ title: CARUBRA AI Agent
 slug: carubra
 category: Web Development
 year: '2025'
-width: 1200
-height: 630
-image: /assets/img/portfolio/web/carubra-hero.png
+width: 1024
+height: 1536
+image: /assets/img/portfolio/web/carubra.webp
+gallery:
+  - src: /assets/img/portfolio/web/carubra.webp
+    alt: CARUBRA AI Agent
+  - src: /assets/img/portfolio/web/carubra-tech.png
+    alt: Infografik teknologi CARUBRA AI Agent
+  - src: /assets/img/portfolio/web/carubra-possibilities.png
+    alt: Ragam penggunaan CARUBRA AI Agent
+  - src: /assets/img/portfolio/web/carubra-landing.png
+    alt: Landing page platform CARUBRA
 link: https://carubra.com
-description: Solusi kecerdasan bisnis berbasis AI Agent via WhatsApp untuk perusahaan.
-challenge: Mengubah pengetahuan dan SOP perusahaan menjadi AI Agent yang dapat diakses langsung melalui WhatsApp tanpa perlu install aplikasi baru.
-solution: Membangun platform AI Agent yang 100% kontekstual, terintegrasi dengan WhatsApp, dan dapat memahami knowledge base perusahaan secara real-time.
+description: Project mandiri yang berkembang menjadi solusi AI Agent via WhatsApp untuk kebutuhan bisnis dan klien.
+challenge: Mengubah ide awal menjadi produk yang mudah dipahami, relevan bagi bisnis, dan dapat menghubungkan knowledge base dengan percakapan WhatsApp.
+solution: Mengembangkan CARUBRA secara mandiri, dari project personal menuju kebutuhan klien dan bisnis, dengan pengembangan yang masih berlanjut.
 services:
   - Web Development
   - UI/UX Design
@@ -17,9 +26,17 @@ services:
   - WhatsApp Integration
 ---
 
-CARUBRA adalah platform AI Agent yang mengubah cara perusahaan berinteraksi dengan knowledge base mereka. Dengan integrasi WhatsApp, tim dapat mengakses informasi dan SOP perusahaan secara instant tanpa perlu membuka aplikasi tambahan.
+CARUBRA adalah project yang saya kerjakan secara mandiri selama lima bulan dan masih terus dikembangkan. Berawal dari project personal, CARUBRA kemudian berkembang menuju kebutuhan klien dan bisnis.
 
-Platform ini dibangun dengan fokus pada user experience yang sederhana namun powerful, memungkinkan perusahaan untuk men-deploy AI agent mereka dalam hitungan menit.
+Seiring proses pengembangan, CARUBRA bergerak dari project mandiri menuju produk yang disiapkan untuk kebutuhan klien dan penggunaan bisnis. Fokusnya bukan hanya membuat teknologi AI bekerja, tetapi juga menerjemahkan manfaatnya menjadi pengalaman yang mudah dipahami oleh calon pengguna.
+
+## Peran dan Tanggung Jawab
+
+Saya mengerjakan project ini sendiri. Pengembangan berlangsung selama lima bulan dan berlanjut seiring arah project bergeser dari kebutuhan personal menuju kebutuhan klien dan bisnis.
+
+## Perjalanan Project
+
+CARUBRA berawal sebagai project mandiri, kemudian berkembang menuju kebutuhan klien dan bisnis. Perubahan arah ini menjadi bagian penting dari perjalanan project: hasil pengembangan tidak lagi hanya ditujukan untuk eksplorasi personal.
 
 ![CARUBRA AI Agent Technology](/assets/img/portfolio/web/carubra-tech.png)
 
@@ -64,3 +81,7 @@ CARUBRA membangun AI Agent untuk bisnis, organisasi, dan profesional — disesua
 4. **Integration** - Terintegrasi dengan sistem Anda
 
 Mudah, Cepat, dan Praktis via WhatsApp.
+
+## Hasil
+
+Hasil yang dapat dibagikan saat ini adalah perkembangan CARUBRA dari project mandiri menuju kebutuhan klien dan bisnis selama lima bulan pengerjaan. Pengembangan masih berlangsung. Studi kasus ini belum menyertakan angka pengguna, pendapatan, atau peningkatan efisiensi.

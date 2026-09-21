@@ -1,37 +1,69 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
 import { getCollection } from 'astro:content';
 import { services, site } from '../data/site';
 const projects = (await getCollection('projects')).sort((a, b) => Number(b.data.year) - Number(a.data.year)).map((entry) => entry.data);
+const navLinks = [
+  { label: 'Karya', href: '#work' },
+  { label: 'Layanan', href: '#services' },
+  { label: 'Tentang', href: '#about' },
+  { label: 'Resume', href: '/resume/' },
+  { label: 'Kontak', href: '#contact', cta: true }
+];
+const commands = projects.map((project) => ({ label: project.title, href: '/work/' + project.slug + '/', kind: project.category }));
 ---
-<BaseLayout>
-  <header class="site-header">
-    <a class="brand" href="/" aria-label="BK.">BK<span>.</span></a>
-    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
-    <nav id="site-nav" aria-label="Navigasi utama">
-      <a href="#work">Karya</a>
-      <a href="#services">Layanan</a>
-      <a href="#about">Tentang</a>
-      <a class="nav-cta" href="#contact">Mulai ngobrol ↗</a>
-    </nav>
-  </header>
+<BaseLayout commands={commands}>
+  <Header links={navLinks} />
 
   <main id="main">
     <section class="hero container">
-      <p class="eyebrow">Portfolio pribadi · {site.location}</p>
-      <h1>Membangun <em>digital experience</em> yang terasa manusiawi.</h1>
-      <div class="hero-bottom">
-        <p class="lede">Saya Bimo, web developer dan digital creative yang membantu ide berubah menjadi website, brand, dan pengalaman digital yang siap digunakan.</p>
-        <a class="button button-primary" href="#work">Lihat karya <span>↓</span></a>
+      <div class="hero-grid">
+        <div>
+          <p class="eyebrow">Portfolio pribadi · {site.location}</p>
+          <h1 class="hero-title">Membangun <em>digital experience</em> yang terasa manusiawi.</h1>
+          <p class="lede">Saya Bimo, web developer dan digital creative yang membantu ide berubah menjadi website, brand, dan pengalaman digital yang siap digunakan.</p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="#work">Lihat karya <span aria-hidden="true">↓</span></a>
+            <a class="button button-secondary" href="/resume/">Buka resume ↗</a>
+          </div>
+          <div class="stat-grid">
+            <div class="stat"><b>{site.yearsExperience}+</b><span>Tahun pengalaman</span></div>
+            <div class="stat"><b>{projects.length}+</b><span>Project terkirim</span></div>
+            <div class="stat"><b>10+</b><span>Skill inti</span></div>
+            <div class="stat"><b>24h</b><span>Waktu respons</span></div>
+          </div>
+        </div>
+
+        <div class="win hero-win" data-reveal aria-hidden="true">
+          <div class="win-bar">
+            <span class="dots"><i></i><i></i><i></i></span>
+            <span class="win-title">~/portfolio/bimo.ts</span>
+            <span class="win-badge">open to work</span>
+          </div>
+          <div class="win-body">
+            <pre class="code"><span class="code-line"><span class="ln">1</span><span><span class="t-kw">const</span> <span class="t-prop">bimo</span> = {`{`}</span></span><span class="code-line"><span class="ln">2</span><span>&nbsp;&nbsp;role:&nbsp;<span class="t-str">"{site.shortRole}"</span>,</span></span><span class="code-line"><span class="ln">3</span><span>&nbsp;&nbsp;stack:&nbsp;[<span class="t-str">"astro"</span>,&nbsp;<span class="t-str">"js"</span>,&nbsp;<span class="t-str">"linux"</span>],</span></span><span class="code-line"><span class="ln">4</span><span>&nbsp;&nbsp;base:&nbsp;<span class="t-str">"{site.locality}, ID"</span>,</span></span><span class="code-line"><span class="ln">5</span><span>&nbsp;&nbsp;years:&nbsp;<span class="t-num">{site.yearsExperience}</span>,</span></span><span class="code-line"><span class="ln">6</span><span>&nbsp;&nbsp;open:&nbsp;<span class="t-kw">true</span><span class="caret"></span></span></span><span class="code-line"><span class="ln">7</span><span>{`}`}</span></span></pre>
+          </div>
+          <div class="win-bar" style="border-top:1px solid var(--line);border-bottom:0">
+            <span>$ ls ./skills --top 3</span>
+          </div>
+          <div class="win-body" style="padding-top:14px">
+            <p class="prompt-line"><span class="t-str">▸</span> Web Development &amp; Astro</p>
+            <p class="prompt-line"><span class="t-str">▸</span> UI/UX &amp; Graphic Design</p>
+            <p class="prompt-line" style="margin-bottom:0"><span class="t-str">▸</span> Linux Server &amp; Jaringan</p>
+          </div>
+        </div>
       </div>
     </section>
 
-    <section id="work" class="section container">
+    <section id="work" class="section container" data-reveal>
       <div class="section-heading"><p class="eyebrow">Selected work</p><h2>Beberapa hal yang pernah dibuat.</h2></div>
       <div class="filter-list" role="group" aria-label="Filter karya"><button class="filter-button is-active" type="button" data-filter="all">Semua</button><button class="filter-button" type="button" data-filter="Web Development">Web</button><button class="filter-button" type="button" data-filter="Graphic Design">Design</button></div>
       <div class="project-grid">
         {projects.map((project, index) => (
           <a class:list={['project-card', index === 0 && 'project-featured']} data-category={project.category} href={'/work/' + project.slug + '/'}>
+            <div class="card-bar"><span class="dots"><i></i><i></i><i></i></span><span class="file">{project.slug}.project</span><span class="go">open →</span></div>
             <div class="project-image"><img src={project.image} alt={`Preview project ${project.title}`} width={project.width} height={project.height} loading={index === 0 ? 'eager' : 'lazy'} /></div>
             <div class="project-meta"><div><p class="project-category">{project.category} · {project.year}</p><h3>{project.title}</h3></div><span aria-hidden="true">↗</span></div>
             <p class="project-description">{project.description}</p>
@@ -40,28 +72,22 @@ const projects = (await getCollection('projects')).sort((a, b) => Number(b.data.
       </div>
     </section>
 
-    <section id="services" class="section section-muted">
+    <section id="services" class="section section-muted" data-reveal>
       <div class="container"><div class="section-heading"><p class="eyebrow">What I do</p><h2>Keahlian untuk membuat ide bergerak.</h2></div>
         <div class="service-grid">{services.map((service) => <article class="service-card"><span>{service.number}</span><h3>{service.title}</h3><p>{service.text}</p></article>)}</div>
       </div>
     </section>
 
-    <section id="about" class="section container about-grid">
+    <section id="about" class="section container about-grid" data-reveal>
       <div><p class="eyebrow">About me</p><h2>Teknologi kuat. Komunikasi jelas.</h2></div>
       <div class="about-copy"><p>Saya menggabungkan development, desain, dan rasa ingin tahu untuk membuat solusi digital yang bukan hanya terlihat baik, tetapi juga bekerja dengan baik.</p><p>Berbasis di Tulungagung, saya terbuka untuk project freelance, kolaborasi, dan kesempatan membangun sesuatu yang berdampak.</p></div>
     </section>
 
-    <section id="contact" class="contact container"><p class="eyebrow">Have a project in mind?</p><h2>Mari buat sesuatu<br /><em>yang berarti.</em></h2><div class="contact-actions"><a class="button button-primary" href={`mailto:${site.email}`}>Hubungi saya ↗</a><a class="button button-secondary" href="/resume/">Lihat resume ↗</a></div><div class="contact-links"><a href={site.github} target="_blank" rel="noopener noreferrer">GitHub</a><a href={site.instagram} target="_blank" rel="noopener noreferrer">Instagram</a><a href={site.whatsapp} target="_blank" rel="noopener noreferrer">WhatsApp</a></div></section>
+    <section id="contact" class="contact container" data-reveal><p class="eyebrow">Have a project in mind?</p><h2>Mari buat sesuatu<br /><em>yang berarti.</em></h2><div class="contact-actions"><a class="button button-primary" href="/contact/">Hubungi saya ↗</a><a class="button button-secondary" href="/resume/">Lihat resume ↗</a></div><div class="contact-links"><a href={site.github} target="_blank" rel="noopener noreferrer">GitHub</a><a href={site.instagram} target="_blank" rel="noopener noreferrer">Instagram</a><a href={site.whatsapp} target="_blank" rel="noopener noreferrer">WhatsApp</a></div></section>
   </main>
 
-  <footer class="site-footer container"><span>© {new Date().getFullYear()} {site.name}</span><span>Dibuat dengan niat baik.</span></footer>
+  <Footer />
 <script>
-  const toggle = document.querySelector('.menu-toggle');
-  const nav = document.querySelector('#site-nav');
-  toggle?.addEventListener('click', () => { const open = toggle.getAttribute('aria-expanded') === 'true'; toggle.setAttribute('aria-expanded', String(!open)); nav?.classList.toggle('is-open', !open); });
   document.querySelectorAll('.filter-button').forEach((button) => button.addEventListener('click', () => { document.querySelectorAll('.filter-button').forEach((item) => item.classList.remove('is-active')); button.classList.add('is-active'); const filter = button.getAttribute('data-filter'); document.querySelectorAll('.project-card').forEach((card) => { card.toggleAttribute('hidden', filter !== 'all' && card.getAttribute('data-category') !== filter); }); }));
 </script>
 </BaseLayout>
-
-
-

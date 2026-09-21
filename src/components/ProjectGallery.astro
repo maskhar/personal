@@ -1,0 +1,82 @@
+---
+interface Props { images: { src: string; alt: string }[]; }
+const { images } = Astro.props;
+---
+<section class="gallery" data-gallery aria-label="Galeri project" aria-roledescription="carousel">
+  <div class="viewport" tabindex="0" aria-label="Gambar project. Gunakan panah kiri atau kanan.">
+    <div class="track">
+      {images.map((image, index) => <div class="slide" role="group" aria-roledescription="slide" aria-label={`${index + 1} dari ${images.length}`} aria-hidden={index !== 0}><img src={image.src} alt={image.alt} loading={index === 0 ? 'eager' : 'lazy'} /></div>)}
+    </div>
+  </div>
+  <div class="controls" hidden>
+    <button type="button" data-prev aria-label="Gambar sebelumnya">←</button>
+    <span data-count aria-live="off">1 / {images.length}</span>
+    <button type="button" data-next aria-label="Gambar berikutnya">→</button>
+    <button type="button" data-play>Jeda otomatis</button>
+  </div>
+</section>
+<style>
+  .gallery{margin-bottom:50px;border:1px solid var(--line);background:var(--surface);overflow:hidden}
+  .viewport{overflow:hidden;touch-action:pan-y}
+  .track{display:flex;transition:transform .3s ease}
+  .slide{flex:0 0 100%;min-width:0;height:clamp(320px,65vh,720px);display:flex;align-items:center;justify-content:center}
+  .slide img{display:block;width:100%;height:100%;object-fit:contain}
+  .controls{display:flex;justify-content:center;align-items:center;gap:12px;padding:14px;flex-wrap:wrap;border-top:1px solid var(--line)}
+  .controls[hidden]{display:none}
+  button{min-width:44px;min-height:44px;padding:8px 14px;border:1px solid var(--line);background:transparent;color:var(--text);font:inherit;cursor:pointer}
+  button:hover{border-color:var(--accent)}
+  button:focus-visible,.viewport:focus-visible{outline:2px solid var(--accent);outline-offset:-3px}
+  @media(prefers-reduced-motion:reduce){.track{transition:none}}
+</style>
+<script>
+  document.querySelectorAll<HTMLElement>('[data-gallery]').forEach((gallery) => {
+    const track = gallery.querySelector<HTMLElement>('.track')!;
+    const slides = Array.from(gallery.querySelectorAll<HTMLElement>('.slide'));
+    const viewport = gallery.querySelector<HTMLElement>('.viewport')!;
+    const count = gallery.querySelector<HTMLElement>('[data-count]')!;
+    const play = gallery.querySelector<HTMLButtonElement>('[data-play]')!;
+    const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let index = 0;
+    let paused = motion.matches;
+    let hovered = false;
+    let timer: ReturnType<typeof setInterval> | undefined;
+    let touchStart: { x: number; y: number } | undefined;
+    function show(next: number) {
+      index = (next + slides.length) % slides.length;
+      track.style.transform = `translateX(-${index * 100}%)`;
+      slides.forEach((slide, position) => slide.setAttribute('aria-hidden', String(position !== index)));
+      count.textContent = `${index + 1} / ${slides.length}`;
+    }
+    function schedule() {
+      clearInterval(timer);
+      play.textContent = paused ? 'Putar otomatis' : 'Jeda otomatis';
+      if (!paused && !hovered && !document.hidden && !gallery.contains(document.activeElement)) timer = setInterval(() => show(index + 1), 5000);
+    }
+    function manual(next: number) { show(next); schedule(); }
+    gallery.querySelector('[data-prev]')!.addEventListener('click', () => manual(index - 1));
+    gallery.querySelector('[data-next]')!.addEventListener('click', () => manual(index + 1));
+    play.addEventListener('click', () => { paused = !paused; schedule(); });
+    viewport.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') { event.preventDefault(); manual(index + (event.key === 'ArrowRight' ? 1 : -1)); }
+    });
+    viewport.addEventListener('touchstart', (event) => { touchStart = { x: event.changedTouches[0].clientX, y: event.changedTouches[0].clientY }; clearInterval(timer); }, { passive: true });
+    viewport.addEventListener('touchend', (event) => {
+      if (!touchStart) return;
+      const distance = event.changedTouches[0].clientX - touchStart.x;
+      const vertical = event.changedTouches[0].clientY - touchStart.y;
+      if (Math.abs(distance) > 50 && Math.abs(distance) > Math.abs(vertical)) show(index + (distance < 0 ? 1 : -1));
+      touchStart = undefined;
+      schedule();
+    }, { passive: true });
+    viewport.addEventListener('touchcancel', () => { touchStart = undefined; schedule(); });
+    gallery.addEventListener('mouseenter', () => { hovered = true; schedule(); });
+    gallery.addEventListener('mouseleave', () => { hovered = false; schedule(); });
+    gallery.addEventListener('focusin', schedule);
+    gallery.addEventListener('focusout', () => setTimeout(schedule, 0));
+    document.addEventListener('visibilitychange', schedule);
+    motion.addEventListener('change', () => { paused = motion.matches; schedule(); });
+    gallery.querySelector<HTMLElement>('.controls')!.hidden = false;
+    schedule();
+  });
+</script>
+

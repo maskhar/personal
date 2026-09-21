@@ -1,0 +1,35 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        # Isi lewat .env di folder ini kalau mau GA4/Umami ikut ke-bundle saat build.
+        PUBLIC_GA4_ID: ${PUBLIC_GA4_ID:-}
+        PUBLIC_UMAMI_SCRIPT_URL: ${PUBLIC_UMAMI_SCRIPT_URL:-}
+        PUBLIC_UMAMI_WEBSITE_ID: ${PUBLIC_UMAMI_WEBSITE_ID:-}
+    image: maskhar-web:latest
+    container_name: maskhar-web
+    restart: unless-stopped
+    # 8086 kosong di host (dicek terhadap semua container yang lagi jalan).
+    # Bind ke 127.0.0.1 — akses publik lewat Cloudflare Tunnel (network-maskhar), bukan port ini.
+    ports:
+      - "127.0.0.1:8086:80"
+    networks:
+      - maskhar-network
+      - carubra-network
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1/healthz"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+networks:
+  # Network ini sudah ada di Docker milikmu (dipakai container tunnel
+  # cloudflared "network-maskhar" / "network-carubra"). external: true
+  # supaya compose gak coba bikin baru / rebentrok nama.
+  maskhar-network:
+    external: true
+  carubra-network:
+    external: true

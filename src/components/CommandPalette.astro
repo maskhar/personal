@@ -1,0 +1,99 @@
+---
+interface CommandItem { label: string; href: string; kind: string; external?: boolean }
+interface Props { items?: CommandItem[] }
+
+const baseCommands: CommandItem[] = [
+  { label: 'Beranda', href: '/', kind: 'page' },
+  { label: 'Karya', href: '/work/', kind: 'page' },
+  { label: 'Resume', href: '/resume/', kind: 'page' },
+  { label: 'Kontak', href: '/contact/', kind: 'page' }
+];
+
+const { items = [] } = Astro.props;
+const commands = [...baseCommands, ...items];
+---
+<div class="cmdk" id="cmdk" hidden role="dialog" aria-modal="true" aria-label="Command palette">
+  <div class="cmdk-panel">
+    <div class="cmdk-field">
+      <span class="prompt">/</span>
+      <input class="cmdk-input" id="cmdk-input" type="text" placeholder="Ketik untuk mencari halaman atau project…" autocomplete="off" spellcheck="false" />
+      <span class="cmdk-esc">ESC</span>
+    </div>
+    <ul class="cmdk-list" id="cmdk-list">
+      {commands.map((item, index) => (
+        <li class="cmdk-item" data-index={index} class:list={[index === 0 && 'is-active']}>
+          <a href={item.href} target={item.external ? '_blank' : undefined} rel={item.external ? 'noopener noreferrer' : undefined} data-label={item.label.toLowerCase()}>
+            <span class="glyph" aria-hidden="true">{item.external ? '↗' : '›'}</span>
+            <span>{item.label}</span>
+            <span class="kind">{item.kind}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+    <p class="cmdk-empty" id="cmdk-empty" hidden>Tidak ada hasil.</p>
+  </div>
+</div>
+<script>
+  const root = document.getElementById('cmdk');
+  const input = document.getElementById('cmdk-input') as HTMLInputElement | null;
+  const list = document.getElementById('cmdk-list');
+  const empty = document.getElementById('cmdk-empty');
+  if (root && input && list && empty) {
+    const items = Array.from(list.querySelectorAll<HTMLLIElement>('.cmdk-item'));
+    let lastFocused: HTMLElement | null = null;
+
+    function visibleItems() { return items.filter((item) => !item.hidden); }
+    function setActive(target: HTMLElement) {
+      items.forEach((item) => item.classList.remove('is-active'));
+      target.classList.add('is-active');
+      target.scrollIntoView({ block: 'nearest' });
+    }
+    function open() {
+      lastFocused = document.activeElement as HTMLElement;
+      root!.hidden = false;
+      input!.value = '';
+      filter();
+      requestAnimationFrame(() => input!.focus());
+      document.body.style.overflow = 'hidden';
+    }
+    function close() {
+      root!.hidden = true;
+      document.body.style.overflow = '';
+      lastFocused?.focus();
+    }
+    function filter() {
+      const query = input!.value.trim().toLowerCase();
+      let firstVisible: HTMLElement | null = null;
+      items.forEach((item) => {
+        const label = item.querySelector('a')?.dataset.label ?? '';
+        const match = label.includes(query);
+        item.hidden = !match;
+        if (match && !firstVisible) firstVisible = item;
+      });
+      empty!.hidden = Boolean(firstVisible);
+      if (firstVisible) setActive(firstVisible);
+    }
+
+    document.addEventListener('keydown', (event) => {
+      const isCombo = (event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k';
+      if (isCombo) { event.preventDefault(); root!.hidden ? open() : close(); return; }
+      if (event.key === '/' && root!.hidden && document.activeElement?.tagName !== 'INPUT' && document.activeElement?.tagName !== 'TEXTAREA') {
+        event.preventDefault();
+        open();
+      }
+    });
+    root.addEventListener('click', (event) => { if (event.target === root) close(); });
+    document.querySelectorAll<HTMLElement>('[data-cmdk-open]').forEach((trigger) => trigger.addEventListener('click', open));
+
+    input.addEventListener('input', filter);
+    input.addEventListener('keydown', (event) => {
+      const current = visibleItems();
+      const activeIndex = current.findIndex((item) => item.classList.contains('is-active'));
+      if (event.key === 'Escape') { event.preventDefault(); close(); }
+      else if (event.key === 'ArrowDown') { event.preventDefault(); setActive(current[(activeIndex + 1) % current.length] ?? current[0]); }
+      else if (event.key === 'ArrowUp') { event.preventDefault(); setActive(current[(activeIndex - 1 + current.length) % current.length] ?? current[0]); }
+      else if (event.key === 'Enter') { event.preventDefault(); current[activeIndex]?.querySelector('a')?.click(); }
+    });
+    items.forEach((item) => item.addEventListener('mouseenter', () => setActive(item)));
+  }
+</script>

@@ -1,46 +1,165 @@
 ---
-import { site } from '../data/site';
+import { site, expertise } from '../data/site';
+import CommandPalette from '../components/CommandPalette.astro';
 import '../styles/global.css';
-interface Props { title?: string; description?: string; image?: string; type?: 'website' | 'article'; }
-const { title = site.name + ' — ' + site.role, description = site.description, image = '/og-image.png', type = 'website' } = Astro.props;
+
+interface CommandItem { label: string; href: string; kind: string; external?: boolean }
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  imageAlt?: string;
+  type?: 'website' | 'article' | 'profile';
+  noindex?: boolean;
+  commands?: CommandItem[];
+  statusRight?: string;
+}
+
+const {
+  title = site.name + ' — ' + site.role,
+  description = site.description,
+  image = site.ogImage,
+  imageAlt = 'Portfolio ' + site.name + ' — ' + site.role,
+  type = 'website',
+  noindex = false,
+  commands = [],
+  statusRight = 'UTF-8 · Astro · id-ID'
+} = Astro.props;
+
 const canonical = new URL(Astro.url.pathname, site.canonical).toString();
-const personSchema = { '@context': 'https://schema.org', '@type': 'Person', name: site.name, url: site.canonical, jobTitle: site.role, email: 'mailto:' + site.email, sameAs: [site.github, site.instagram] };
-const websiteSchema = { '@context': 'https://schema.org', '@type': 'WebSite', name: site.name, url: site.canonical, description: site.description, inLanguage: 'id-ID' };
+const ogImage = new URL(image, site.canonical).toString();
+
+const personSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  '@id': site.canonical + '/#person',
+  name: site.name,
+  url: site.canonical,
+  image: new URL('/assets/img/bio/petikdua-2.webp', site.canonical).toString(),
+  jobTitle: site.role,
+  description: site.description,
+  email: 'mailto:' + site.email,
+  telephone: site.phone,
+  knowsAbout: expertise,
+  knowsLanguage: ['id', 'en'],
+  worksFor: { '@type': 'Organization', name: site.worksFor },
+  alumniOf: { '@type': 'CollegeOrUniversity', name: site.alumniOf },
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: site.locality,
+    addressRegion: site.region,
+    addressCountry: site.country
+  },
+  sameAs: [site.github, site.instagram, site.whatsapp]
+};
+
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  '@id': site.canonical + '/#website',
+  name: site.name,
+  alternateName: 'maskhar.id',
+  url: site.canonical,
+  description: site.description,
+  inLanguage: 'id-ID',
+  publisher: { '@id': site.canonical + '/#person' }
+};
+
 const analyticsScript = import.meta.env.PUBLIC_UMAMI_SCRIPT_URL;
 const analyticsWebsiteId = import.meta.env.PUBLIC_UMAMI_WEBSITE_ID;
+const ga4Id = import.meta.env.PUBLIC_GA4_ID;
+const year = new Date().getFullYear();
 ---
 <!doctype html>
 <html lang="id">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
     <meta name="description" content={description} />
+    <meta name="author" content={site.name} />
+    <meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'} />
+    <meta name="googlebot" content={noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large'} />
     <link rel="canonical" href={canonical} />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap"
+    />
+
     <meta property="og:type" content={type} />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:locale" content="id_ID" />
     <meta property="og:url" content={canonical} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content={new URL(image, site.canonical)} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:alt" content={imageAlt} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="theme-color" content="#0b0d0f" />
-    <link rel="icon" href="/assets/img/bio/petikdua-2.webp" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image:alt" content={imageAlt} />
+
+    <meta name="theme-color" content="#0d1117" />
+    <meta name="geo.region" content="ID-JI" />
+    <meta name="geo.placename" content={site.locality} />
+    <link rel="icon" href="/assets/img/bio/petikdua-2.webp" type="image/webp" />
+    <link rel="apple-touch-icon" href="/assets/img/bio/petikdua-2.png" />
     <link rel="manifest" href="/site.webmanifest" />
-    <title>{title}</title>
+    <link rel="alternate" type="application/xml" title="Sitemap" href="/sitemap-index.xml" />
+
     <script is:inline type="application/ld+json" set:html={JSON.stringify(personSchema)} />
     <script is:inline type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
+
     {analyticsScript && analyticsWebsiteId && <script is:inline async src={analyticsScript} data-website-id={analyticsWebsiteId}></script>}
+
+    {ga4Id && (
+      <Fragment>
+        <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${ga4Id}`}></script>
+        <script is:inline define:vars={{ ga4Id }}>
+          window.dataLayer = window.dataLayer || [];
+          function gtag() { window.dataLayer.push(arguments); }
+          window.gtag = gtag;
+          gtag('js', new Date());
+          gtag('config', ga4Id, { anonymize_ip: true });
+        </script>
+      </Fragment>
+    )}
   </head>
   <body>
     <a class="skip-link" href="#main">Lewati ke konten utama</a>
     <slot />
+    <CommandPalette items={commands} />
+    <div class="statusbar" role="status" aria-label="Status bar">
+      <span class="sb-ok">available for work</span>
+      <span class="sb-hide-sm">{site.locality}, ID</span>
+      <span class="sb-hide-sm">© {year} {site.name}</span>
+      <span class="sb-right">{statusRight}</span>
+    </div>
+    <script>
+      const motionOk = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const targets = document.querySelectorAll('[data-reveal]');
+      if (!motionOk || !('IntersectionObserver' in window)) {
+        targets.forEach((element) => element.classList.add('is-in'));
+      } else {
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (!entry.isIntersecting) return;
+              entry.target.classList.add('is-in');
+              observer.unobserve(entry.target);
+            });
+          },
+          { rootMargin: '0px 0px -8% 0px', threshold: 0.08 }
+        );
+        targets.forEach((element) => observer.observe(element));
+      }
+    </script>
   </body>
 </html>
-
-
-
-
-
-
-

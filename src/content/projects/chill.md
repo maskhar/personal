@@ -1,7 +1,7 @@
 ---
 title: Chill
 slug: chill
-category: Brand & Web
+category: Web Development
 year: '2025'
 width: 1400
 height: 1400

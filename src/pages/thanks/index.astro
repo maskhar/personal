@@ -1,6 +1,22 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
 ---
-<BaseLayout title="Pesan terkirim — Bimo Kharismantoro" description="Pesan berhasil dikirim kepada Bimo Kharismantoro.">
-  <main id="main" class="status-page container"><p class="eyebrow">Message sent</p><h1>Terima kasih.</h1><p>Pesan kamu sudah dikirim. Saya akan membalas secepatnya.</p><a class="button button-primary" href="/">Kembali ke beranda</a></main>
+<BaseLayout noindex title="Pesan terkirim — Bimo Kharismantoro" description="Pesan berhasil dikirim kepada Bimo Kharismantoro." statusRight="200 · sent">
+  <Header />
+  <main id="main" class="status-page container">
+    <div class="win status-win">
+      <div class="win-bar"><span class="dots"><i></i><i></i><i></i></span><span class="win-title">bash</span></div>
+      <div class="win-body">
+        <p class="status-out"><span class="prompt">$</span> send --message "inquiry"</p>
+        <p class="status-out"><span class="ok">✓ 200 OK</span> — pesan diterima<span class="caret"></span></p>
+      </div>
+    </div>
+    <p class="eyebrow">Message sent</p>
+    <h1>Terima kasih.</h1>
+    <p>Pesan kamu sudah dikirim. Saya akan membalas secepatnya.</p>
+    <div class="contact-actions"><a class="button button-primary" href="/">Kembali ke beranda</a><a class="button button-secondary" href="/work/">Lihat karya</a></div>
+  </main>
+  <Footer />
 </BaseLayout>

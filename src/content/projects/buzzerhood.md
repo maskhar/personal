@@ -5,7 +5,7 @@ category: Web Development
 year: '2025'
 width: 1200
 height: 630
-image: /assets/img/portfolio/web/buzzerhood.webp
+image: /assets/img/portfolio/web/buzzerhood-placeholder.svg
 link: https://buzzerhood.com
 description: Media, Influence & Distribution Network untuk campaign brand digital.
 challenge: Menghubungkan brand dengan media, KOL, influencer, creator, dan komunitas dalam satu platform terintegrasi untuk campaign yang terukur.

@@ -1,4 +1,6 @@
-# CORS and Security Headers for maskhar.com and maskhar.site
+# CORS and Security Headers for maskhar.id (+ maskhar.com / maskhar.site)
+# Catatan: file ini hanya dibaca oleh Cloudflare Pages / Netlify.
+# Pada deployment Docker, header diatur di docker/nginx.conf.
 
 /*
   Access-Control-Allow-Origin: *
