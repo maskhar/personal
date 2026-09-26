@@ -562,7 +562,7 @@ em { color: var(--accent); font-style: normal; }
 .resume-heading .page-title { margin-bottom: 12px; }
 
 .resume-section { display: grid; grid-template-columns: 200px 1fr; gap: 28px; padding: 34px 0; border-bottom: 1px solid var(--line); }
-.resume-section > p:not(.eyebrow) { max-width: 68ch; color: var(--muted); font-size: 1.04rem; }
+.resume-section > p:not(.eyebrow) { grid-column: 2; max-width: 68ch; color: var(--muted); font-size: 1.04rem; }
 
 .timeline { display: grid; gap: 26px; }
 .timeline-item { display: grid; grid-template-columns: 175px 1fr; gap: 22px; padding-bottom: 24px; border-bottom: 1px solid var(--line); }
@@ -573,8 +573,14 @@ em { color: var(--accent); font-style: normal; }
 .timeline-item ul { margin: 0; padding-left: 18px; color: var(--muted); font-size: 0.92rem; line-height: 1.7; }
 .timeline-item li { margin-bottom: 5px; }
 
-.skills-meter-list { display: grid; gap: 15px; max-width: 640px; }
-.skill-meter { display: grid; gap: 7px; }
+.skill-groups { display: grid; gap: 30px; max-width: 720px; }
+.skill-group h2 { font: 500 0.72rem var(--mono); letter-spacing: 0.05em; text-transform: uppercase; color: var(--accent); margin: 0 0 14px; max-width: none; }
+.skills-note { margin: 0; color: var(--dim); font: 400 0.78rem var(--mono); }
+
+/* Dua kolom saat ruang cukup supaya daftar 28 meter tidak jadi kolom panjang;
+   turun sendiri ke satu kolom di bawah ~300px per kolom. */
+.skills-meter-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 15px 26px; max-width: 720px; }
+.skill-meter { display: grid; gap: 7px; min-width: 0; }
 .skill-meter-label { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; font: 500 0.86rem var(--mono); }
 .skill-meter-label span { color: var(--text); }
 .skill-meter-label strong { font: 500 0.78rem var(--mono); color: var(--dim); }
@@ -678,6 +684,7 @@ em { color: var(--accent); font-style: normal; }
   .resume-heading, .resume-section { display: block; }
   .resume-heading .button { margin-top: 22px; }
   .resume-section .eyebrow { margin-bottom: 16px; }
+  .skills-meter-list { grid-template-columns: 1fr; }
   .timeline-item { grid-template-columns: 1fr; gap: 9px; }
   .site-footer { display: block; }
   .footer-links { margin-top: 12px; }
@@ -709,6 +716,9 @@ em { color: var(--accent); font-style: normal; }
   .resume-section { border-color: #ddd; }
   .resume-section > p:not(.eyebrow), .timeline-org, .timeline-item ul, .skill-meter-label strong { color: #333; }
   .resume-page a, .skill-meter-label span, .timeline-item h2 { color: #111; }
+  .skill-group { break-inside: avoid; }
+  .skill-group h2 { color: #4d6b17; }
+  .skills-note { color: #333; }
   .skill-meter-track { border: 1px solid #bbb; background: #fff; }
   .skill-meter-fill { background: #4d6b17; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   .timeline-item { break-inside: avoid; }

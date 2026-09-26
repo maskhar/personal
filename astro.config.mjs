@@ -5,7 +5,9 @@ export default defineConfig({
   site: 'https://maskhar.id',
   integrations: [
     sitemap({
-      filter: (page) => !new URL(page).pathname.startsWith('/thanks/')
+      // Halaman ber-`noindex` tidak boleh ikut sitemap: dua sinyal yang
+      // bertentangan membuat crawler menebak mana yang dimaksud.
+      filter: (page) => !['/thanks/', '/404/'].some((path) => new URL(page).pathname.startsWith(path))
     })
   ],
   build: {

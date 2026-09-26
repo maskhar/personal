@@ -9,6 +9,7 @@ export async function getStaticPaths() { const entries = await getCollection('pr
 const { entry } = Astro.props;
 const { Content } = await render(entry);
 const project = entry.data;
+const externalLinks = project.links ?? (project.link ? [{ label: 'Kunjungi Website', href: project.link }] : []);
 const allProjects = (await getCollection('projects')).map((item) => item.data);
 const commands = allProjects
   .filter((item) => item.slug !== project.slug)
@@ -21,6 +22,8 @@ const breadcrumbSchema = { '@context': 'https://schema.org', '@type': 'Breadcrum
   description={project.description}
   image={project.image}
   imageAlt={'Preview project ' + project.title}
+  imageWidth={project.width}
+  imageHeight={project.height}
   type="article"
   commands={commands}
   statusRight={project.category + ' · ' + project.year}
@@ -47,7 +50,7 @@ const breadcrumbSchema = { '@context': 'https://schema.org', '@type': 'Breadcrum
     </div>
     <div class="project-body"><Content /></div>
     <div class="project-actions">
-      {project.link && <a class="button button-secondary" href={project.link} target="_blank" rel="noopener noreferrer">Kunjungi Website ↗</a>}
+      {externalLinks.map((item) => <a class="button button-secondary" href={item.href} target="_blank" rel="noopener noreferrer">{item.label} ↗</a>)}
       <a class="button button-primary" href={'mailto:' + site.email}>Diskusikan project ↗</a>
     </div>
   </main>
