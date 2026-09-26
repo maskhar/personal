@@ -4,17 +4,63 @@ import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import { site } from '../../data/site';
 
-const skills = [
-  { label: 'Adobe Illustrator', value: 93 },
-  { label: 'Adobe Photoshop', value: 90 },
-  { label: 'Fotografi', value: 86 },
-  { label: 'JavaScript', value: 80 },
-  { label: 'Pemrograman Jaringan', value: 80 },
-  { label: 'Mikrotik', value: 80 },
-  { label: 'Linux Server', value: 80 },
-  { label: 'HTML & CSS', value: 76 },
-  { label: 'UI/UX Design', value: 66 },
-  { label: 'PHP & MySQL', value: 50 }
+// Dikelompokkan supaya pembaca langsung melihat cakupan kerja, bukan satu
+// daftar panjang. Frontend dan backend dipisah agar cakupan full-stack
+// terbaca sekali lihat. Nilai adalah penilaian diri, bukan hasil sertifikasi.
+const skillGroups = [
+  {
+    label: 'Frontend & UI',
+    items: [
+      { label: 'JavaScript', value: 80 },
+      { label: 'Astro', value: 78 },
+      { label: 'HTML & CSS', value: 76 },
+      { label: 'TypeScript', value: 74 },
+      { label: 'React', value: 72 },
+      { label: 'Vite', value: 72 },
+      { label: 'Next.js', value: 68 }
+    ]
+  },
+  {
+    label: 'Backend & Data',
+    items: [
+      { label: 'Discord Bot Development', value: 75 },
+      { label: 'Node.js', value: 74 },
+      { label: 'NestJS', value: 66 },
+      { label: 'PostgreSQL', value: 66 },
+      { label: 'Supabase', value: 66 },
+      { label: 'PHP & MySQL', value: 50 }
+    ]
+  },
+  {
+    label: 'Infrastruktur & DevOps',
+    items: [
+      { label: 'Linux Server', value: 80 },
+      { label: 'Pemrograman Jaringan', value: 80 },
+      { label: 'Mikrotik', value: 80 },
+      { label: 'Git & Version Control', value: 74 },
+      { label: 'Docker', value: 72 },
+      { label: 'Nginx', value: 70 },
+      { label: 'Cloudflare & DNS', value: 70 },
+      { label: 'GitHub Actions', value: 68 }
+    ]
+  },
+  {
+    label: 'AI & Automation',
+    items: [
+      { label: 'AI Agent Development', value: 82 },
+      { label: 'Workflow Automation', value: 76 }
+    ]
+  },
+  {
+    label: 'Design & Visual',
+    items: [
+      { label: 'Adobe Illustrator', value: 93 },
+      { label: 'Adobe Photoshop', value: 90 },
+      { label: 'Fotografi', value: 86 },
+      { label: 'Figma', value: 72 },
+      { label: 'UI/UX Design', value: 66 }
+    ]
+  }
 ];
 
 const experience = [
@@ -74,7 +120,8 @@ const resumeSchema = {
 ---
 <BaseLayout
   title={'Resume — ' + site.name}
-  description={'Resume ' + site.name + ': ' + site.yearsExperience + '+ tahun pengalaman web development, UI/UX design, dan IT di Tulungagung.'}
+  description={'Resume ' + site.name + ', pendiri CARUBRA AI Studio, dengan ' + site.yearsExperience + '+ tahun pengalaman web development, UI/UX, desain grafis, dan solusi AI untuk bisnis.'}
+  type="profile"
   statusRight="resume.pdf · ready"
 >
   <Header />
@@ -91,7 +138,9 @@ const resumeSchema = {
 
     <section class="resume-section" data-reveal>
       <p class="eyebrow">Profile</p>
-      <p>Desainer grafis dan web developer dengan pengalaman lebih dari {site.yearsExperience} tahun merancang dan mengembangkan produk digital yang berpusat pada pengguna — dari identitas visual, antarmuka, hingga website yang siap pakai. Berbasis di Tulungagung, saat ini aktif sebagai Web Developer & IT Development di {site.worksFor} sekaligus menerima project freelance.</p>
+      <p>Lebih dari {site.yearsExperience} tahun saya membantu bisnis dan UMKM mengubah kebutuhan sehari-hari menjadi produk digital yang benar-benar dipakai — mulai dari identitas visual, antarmuka, sampai website yang siap jalan. Satu orang untuk seluruh rangkaian: desain, pengembangan, hingga server yang menjaganya tetap hidup.</p>
+      <p>Saya juga <strong>{site.venture.role.toLowerCase()} {site.venture.name}</strong>, produk yang saya bangun sendiri dari nol: {site.venture.summary} Pengalaman itu membuat saya terbiasa melihat sebuah project bukan sekadar tampilan, melainkan alur kerja yang harus menghemat waktu pemiliknya.</p>
+      <p>Berbasis di {site.locality}, saat ini aktif sebagai {site.shortRole} di {site.worksFor} sekaligus menerima project freelance. Kalau Anda punya rencana yang masih berupa ide, mari kita <a href="/contact/">bicarakan langkah pertamanya</a> — atau lihat dulu <a href={site.venture.caseStudy}>{site.venture.name}</a> dan <a href="/work/">karya lainnya</a>.</p>
     </section>
 
     <section class="resume-section" data-reveal>
@@ -124,15 +173,23 @@ const resumeSchema = {
 
     <section class="resume-section" data-reveal>
       <p class="eyebrow">Skills</p>
-      <div class="skills-meter-list">
-        {skills.map((skill) => (
-          <div class="skill-meter">
-            <div class="skill-meter-label"><span>{skill.label}</span><strong>{skill.value}%</strong></div>
-            <div class="skill-meter-track" role="progressbar" aria-label={skill.label} aria-valuenow={skill.value} aria-valuemin="0" aria-valuemax="100">
-              <div class="skill-meter-fill" style={`width:${skill.value}%`}></div>
+      <div class="skill-groups">
+        {skillGroups.map((group) => (
+          <section class="skill-group" aria-labelledby={`skill-${group.label.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}>
+            <h2 id={`skill-${group.label.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}>{group.label}</h2>
+            <div class="skills-meter-list">
+              {group.items.map((skill) => (
+                <div class="skill-meter">
+                  <div class="skill-meter-label"><span>{skill.label}</span><strong>{skill.value}%</strong></div>
+                  <div class="skill-meter-track" role="progressbar" aria-label={skill.label} aria-valuenow={skill.value} aria-valuemin="0" aria-valuemax="100">
+                    <div class="skill-meter-fill" style={`width:${skill.value}%`}></div>
+                  </div>
+                </div>
+              ))}
             </div>
-          </div>
+          </section>
         ))}
+        <p class="skills-note">Tingkat keahlian berdasarkan pengalaman praktik dalam project dan pekerjaan.</p>
       </div>
     </section>
 

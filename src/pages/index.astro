@@ -14,7 +14,11 @@ const navLinks = [
 ];
 const commands = projects.map((project) => ({ label: project.title, href: '/work/' + project.slug + '/', kind: project.category }));
 ---
-<BaseLayout commands={commands}>
+<BaseLayout
+  title={site.name + ' — Web Developer di ' + site.locality}
+  description={'Bimo Kharismantoro, ' + site.venture.role.toLowerCase() + ' ' + site.venture.name + '. Jasa pembuatan website, UI/UX, desain grafis, dan AI Agent untuk bisnis dan UMKM.'}
+  commands={commands}
+>
   <Header links={navLinks} />
 
   <main id="main">

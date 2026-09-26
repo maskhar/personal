@@ -3,7 +3,7 @@ export const site = {
   role: 'Web Developer & Digital Creative',
   shortRole: 'Web Developer & IT Development',
   description:
-    'Portfolio Bimo Kharismantoro: web development, UI/UX design, graphic design, dan solusi digital untuk personal brand dan bisnis.',
+    'Portfolio Bimo Kharismantoro, web developer dan pendiri CARUBRA AI Studio: website, UI/UX, desain grafis, AI Agent, dan solusi digital untuk bisnis.',
   location: 'Tulungagung, Jawa Timur, Indonesia',
   locality: 'Tulungagung',
   region: 'Jawa Timur',
@@ -16,6 +16,14 @@ export const site = {
   canonical: 'https://maskhar.id',
   worksFor: 'UTERO Creative Indonesia',
   yearsExperience: 7,
+  /** Produk yang dibangun sendiri. Dipakai di Profile resume dan JSON-LD `Person.owns`. */
+  venture: {
+    name: 'CARUBRA AI Studio',
+    role: 'Pendiri & kreator',
+    url: 'https://carubra.com',
+    caseStudy: '/work/carubra/',
+    summary: 'AI Agent berbasis WhatsApp untuk kebutuhan bisnis dan organisasi.'
+  },
   alumniOf: 'Universitas Muhammadiyah Malang',
   ogImage: '/og-image.png'
 };
@@ -25,10 +33,21 @@ export const expertise = [
   'Web Development',
   'Astro',
   'JavaScript',
+  'TypeScript',
+  'React',
+  'Next.js',
+  'Vite',
   'HTML & CSS',
+  'Node.js',
+  'NestJS',
+  'Supabase',
+  'PostgreSQL',
   'PHP & MySQL',
   'UI/UX Design',
+  'Figma',
   'Graphic Design',
+  'Docker',
+  'Nginx',
   'Linux Server',
   'Mikrotik',
   'Jaringan Komputer',
